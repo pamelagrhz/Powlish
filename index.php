@@ -1,3 +1,23 @@
+<?php 
+	require_once('controllers/dbconnection.php');
+	require_once('models/pais.php');
+
+	$conn = db_connect();
+	$paises = array();
+
+	$sql = "SELECT id, nombre FROM paises";
+	$result = $conn->query($sql);
+
+	if ( $result->num_rows > 0 ) {
+	    // output data of each row
+	    //row devuelve filas, llamamos de sql a id y nombre
+		while( $row = $result->fetch_assoc() ) {
+			$pais = new Pais($row["id"], $row["nombre"]);
+			array_push($paises, $pais);
+		}
+	}
+	$conn->close();
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,10 +30,8 @@
 	<link type="text/css" rel="stylesheet" href="assets/materialize/css/materialize.min.css"  media="screen,projection"/>
 	<link type="text/css" rel="stylesheet" href="assets/css/styles.css"/>
 
-
-
-<!--menu en pantalla grande -->
-<nav>
+	<!--menu en pantalla grande -->
+	<nav>
 		<div class="nav-wrapper indigo lighten-2">
 			<a href="#!" class="brand-logo"><i class="material-icons">weekend</i>Polwish</a>
 			<a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
@@ -30,10 +48,15 @@
 						<i href="#slide-out" data-activates="slide-out" class="button-collapse"><i class="material-icons circle grey ">person</i>Mi Perfil</i>
 					</a>
 				</li>
+				<li><a class="dropdown-button" href="#!" data-activates="login-dropdown">Iniciar<i class="material-icons right">arrow_drop_down</i></a></li>
 			</ul>
 		</div>
 	</nav>
 
+	<ul id="login-dropdown" class="dropdown-content">
+		<li><a class="modal-trigger" href="#modal-signup">Registrate</a></li>
+		<li><a class="modal-trigger" href="#modal-login">Inicia sesión</a></li>
+	</ul>
 
 	<!--mi perfil-->
 	<ul id="slide-out" class="side-nav">
@@ -54,11 +77,79 @@
 		<li><div class="divider"></div></li>
 		<li><a href="http://www.youtube.com/"target="_blank"">youtube</a></li>
 		<li><a href="http://www.spotify.com/"target="_blank"">spotify</a></li>
-		
+		<li><a class="modal-trigger" href="#modal-signup">Registrate</a></li>
+		<li><a  class="modal-trigger" href="#modal-login">Iniciar Sesión</a></li>
 
 		<li><div class="divider"></div></li>
 		<li><a class="waves-effect" onclick="Materialize.toast('Esta pagina está en construcción, por favor intentalo más tarde', 4000)">Editar Mi Perfil</a></li>
 	</ul>
+
+	<!-- Modal Structure -->
+	<div id="modal-signup" class="modal modal-fixed-footer modal-min">
+		<div class="modal-content">
+			<h4 class="purple-text text-darken-4">Registro</h4>
+			<div class="row">
+				<form class="col s12" action="controllers/registro.php" method="POST">
+					<div class="row">
+						<div class="input-field col s12">
+							<input name="nombre" id="first_name" type="text" class="validate">
+							<label for="first_name">Nombre</label>
+						</div>
+						<div class="input-field col s12 m6">
+							<input name="apellido_paterno" id="last_name" type="text" class="validate">
+							<label for="last_name">Apellido Paterno</label>
+						</div>
+						<div class="input-field col s12 m6">
+							<input name="apellido_materno" id="last_name2" type="text" class="validate">
+							<label for="last_name2">Apellido Materno</label>
+						</div>
+						<div class="col s12"><h5 class="grey-text text-darken-2">Sexo</h5></div>
+						<div class="col s6">
+							<input name="sexo" type="radio" id="sexo1" value="1" />
+							<label for="sexo1">Mujer</label>
+						</div>
+						<div class="col s6">
+							<input name="sexo" type="radio" id="sexo2" value="2" />
+							<label for="sexo2">Hombre</label>
+						</div>
+						<div class="row"></div>
+
+						<div class="input-field col s12">
+							<input name="fecha_nacimiento" id="nacimiento" type="text" class="datepicker">
+							<label for="nacimiento">Fecha de nacimiento</label>
+						</div>
+						<div class="input-field col s12">
+							<select name="pais">
+								<option value="" disabled selected>Elige un país</option>
+								<?php 
+									for( $i = 0 ; $i < count($paises) ; $i++ ) { 
+										echo "<option value='" . $paises[$i]->getId() . "'>" . $paises[$i]->getNombre() . "</option>";
+									} 
+								?>
+							</select>
+							<label>País</label>
+						</div>
+						<div class="input-field col s12">
+							<input name="telefono" id="telefono" type="text" class="validate">
+							<label for="telefono">Telefono</label>
+						</div>
+						<div class="input-field col s12">
+							<input name="email" id="email" type="email" class="validate">
+							<label for="email">Email</label>
+						</div>
+						<div class="input-field col s12">
+							<input name="contrasenia" id="password" type="password" class="validate">
+							<label for="password">Password</label>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat red-text">Cancelar</a>
+			<a href="#!" class="modal-action modal-close waves-effect waves-green btn purple">Continuar</a>
+		</div>
+	</div>
 	
 	<!-- Modal3 Structure -->
 	<div id="modal3" class="modal modal-fixed-footer">
