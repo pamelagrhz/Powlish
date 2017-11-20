@@ -1,0 +1,34 @@
+.modal-min{
+	max-width:500px;
+}
+
+.bg-img{
+	background-position: center;
+	background-repeat:  no-repeat;
+	background-size: cover;
+}
+.parallax-container {
+      height: "your height here";
+    }
+       
+.intro_container{
+	height: 100%;
+	text-align: center;
+	position: center; 
+	background-color: rgba(0,0,0,0.2);
+	overflow: hidden;
+}
+
+.nav-profile {
+	margin: 0 !important;
+}
+
+.nav-profile i.material-icons {
+	display: inline-block;
+	width: 40px !important;
+	height: 40px !important;
+	line-height: 40px;
+	text-align: center;
+	margin-right: 8px;
+}
+

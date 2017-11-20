@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Polwish</title>
+	<link rel="shortcut icon" type="image/png" href="logo.png" />
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!--Import materialize.css-->
+	<link type="text/css" rel="stylesheet" href="assets/materialize/css/materialize.min.css"  media="screen,projection"/>
+	<link type="text/css" rel="stylesheet" href="assets/css/styles.css"  media="screen,projection"/>
+
+
+	<!--Let browser know website is optimized for mobile-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+	
+	<!-- Dropdown Structure -->
+	<ul id="dropdown1" class="dropdown-content">
+		<li><a class="modal-trigger" href="#modal1">Registrate</a></li>
+		<li><a class="modal-trigger" href="#modal2">Inicia sesión</a></li>
+
+	</ul>
+	<ul class="side-nav" id="mobile-demo">
+		<li><a href="sass.html">Inicio</a></li>
+		<li><a class="modal-trigger" href="#modal4">Membresías</a></li>
+		<li><a class="modal-trigger" href="#modal1">Registrate</a></li>
+		<li><a  class="modal-trigger" href="#modal2">Iniciar Sesión</a></li>
+	</ul>
+	<nav>
+		<div class="nav-wrapper   indigo lighten-2">
+			<a href="#!" class="brand-logo"><i class=" medium material-icons">weekend</i>Polwish</a>
+			<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+			<ul class="right hide-on-med-and-down">
+				<li><a href="index.html">Inicio</a></li>
+				<li><a class="modal-trigger" href="#modal4">Membresías</a></li>
+
+
+
+				<!-- Dropdown Trigger -->
+				<li><a class="dropdown-button" href="#!" data-activates="dropdown1">Iniciar<i class="material-icons right">arrow_drop_down</i></a></li>
+			</ul>
+		</div>
+	</nav>
+	<!--Más de nosotros-->
+
+
+	<!-- Modal Structure -->
+	<div id="modal3" class="modal">
+		<div class="modal-content">
+			<h1>Más de nosotros</h1>
+
+			<h4>Descripcion de polwish  </h4>
+			<p> </p>
+			<p>Powlish S.A. de C.V.dedicada al ramo del entretenimiento y streaming de 
+			contenidos multimedia en internet. </p><p> </p>
+			<h4>Problematica de la empresa  </h4>
+			<p></p>
+			<p>Powlish S.A. de C.V. requiere de soluciones web para poder implementar por primera vez una 
+			aplicacion web con la que puedan los usuarios hacer uso de los servicios que ofrece la empresa.  </p>
+
+			<h4>Objetivos </h4>
+			<p></p>
+			<p>Nuestro principal objetivo es satisfacer a nuestros usuarios con la mas alta calidad en contenidos multimedia. </p>
+			<p></p>
+			<p>Que los usuarios  puedan disfrutar de cualquier musica, video, pelicula o serie de television en el momento que lo deseen sin mayores contratiempos. </p>
+			<p></p>
+			<p>Que el usuario pueda visualizar la aplicacion ya sea desde el su telefono celular o desde su laptop.  </p>
+			<div class="modal-footer">
+				<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal4 Structure -->
+<div id="modal4" class="modal">
+	<div class="modal-content">
+
+		<table>
+			<thead>
+				<tr>
+					<th>Tipo de membresía</th>
+					<th>Tiempo</th>
+					<th>Precio</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr>
+					<td>Normal</td>
+					<td>1 mes</td>
+					<td>$50.00</td>
+				</tr>
+				<tr>
+					<td>Plus</td>
+					<td>6 meses</td>
+					<td>$250.00</td>
+				</tr>
+				<tr>
+					<td>Pro</td>
+					<td>1 año</td>
+					<td>$400.00</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+	<div class="modal-footer">
+		<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+		<a class="grey-text text-lighten-4 right" href="#!"><a class="btn" onclick="Materialize.toast('Esta pagina está en construcción, por favor intentalo más tarde', 4000)">Comprar mi membresía</a></a>
+
+	</div>
+</div>
+<!-- Image parallax Structure  ic_weekend_white_24dp_1x.png -->
+
+<div class="parallax-container">
+	<div class="col 1 intro_container">
+		<i class="c large  material-icons enter-align">weekend</i>
+		<p><h1>Powlish</h1></p>
+
+	<div class="parallax"><img src="assets/images/marmol.jpg"></div>
+</div>
+</div>
+<!--carrusel-->
+
+<div>
+	<div class="carousel carousel-slider center" data-indicators="true">
+		<div class="carousel-fixed-item center">
+		<a class="waves-effect waves-light btn modal-trigger" href="#modal3">Más dePolwish</a>
+
+
+		</div>
+		<div class="carousel-item white-text bg-img" href="https://www.spotify.com/" style="background-image: url('assets/images/musica.jpg');">
+			<h1 class=" white-text  valign-wrapper">Música</h1>
+			<p class="white-text  valign-wrapper">Descubre musica nueva y poco conocida.</p>
+		</div>
+		<div class="carousel-item white-text bg-img" style="background-image: url('assets/images/videoo.jpg');">
+			<h1 class="black-text  valign-wrapper">Videos</h1>
+			<p class="black-text  valign-wrapper">Aqui podras ver todos los videos de musica que estan de moda. </p>
+
+		</div>
+		<div class="carousel-item  white-text bg-img" style="background-image: url('assets/images/peli.jpg');">
+			<h1 class="white-text  valign-wrapper">Series y Peliculas</h1>
+			<p class="white-text valign-wrapper ">Descubre nuevas series y peliculas que sean de tu agrado!!!</p>
+
+		</div>
+	</div>
+</div>
+
+<!-- Modal Structure -->
+<div id="modal1" class="modal modal-fixed-footer modal-min">
+	<div class="modal-content">
+		<h4 class="purple-text text-darken-4">Registro</h4>
+		<div class="row">
+			<form class="col s12">
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="first_name" type="text" class="validate">
+						<label for="first_name">Nombre</label>
+					</div>
+					<div class="input-field col s12 m6">
+						<input id="last_name" type="text" class="validate">
+						<label for="last_name">Apellido Paterno</label>
+					</div>
+					<div class="input-field col s12 m6">
+						<input id="last_name2" type="text" class="validate">
+						<label for="last_name2">Apellido Materno</label>
+					</div>
+					<div class="col s12"><h5 class="grey-text text-darken-2">Sexo</h5></div>
+					<div class="col s6">
+						<input name="group1" type="radio" id="sexo1" />
+						<label for="sexo1">Mujer</label>
+					</div>
+					<div class="col s6">
+						<input name="group1" type="radio" id="sexo2" />
+						<label for="sexo2">Hombre</label>
+					</div>
+					<div class="row"></div>
+
+					<div class="input-field col s12 m6">
+						<input id="nacimiento" type="text" class="datepicker">
+						<label for="nacimiento">Fecha de nacimiento</label>
+					</div>
+					<div class="input-field col s12">
+						<select>
+							<option value="" disabled selected>Elige un país</option>
+							<option value="1">Option 1</option>
+							<option value="2">Option 2</option>
+							<option value="3">Option 3</option>
+						</select>
+						<label>País</label>
+					</div>
+					<div class="input-field col s12">
+						<input id="email" type="email" class="validate">
+						<label for="email">Email</label>
+					</div>
+					<div class="input-field col s12">
+						<input id="password" type="password" class="validate">
+						<label for="password">Password</label>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat red-text">Cancelar</a>
+		<a href="#!" class="modal-action modal-close waves-effect waves-green btn purple">Continuar</a>
+	</div>
+</div>
+
+<div id="modal2" class="modal modal-min">
+	<div class="modal-content">
+		<h4 class="purple-text text-darken-4">Iniciar sesión</h4>
+		<div class="row">
+			<form class="col s12">
+				<div class="row">
+					<div class="input-field col s12">
+						<i class="material-icons prefix">email</i>
+						<input id="icon_prefix" type="text" class="validate">
+						<label for="icon_prefix">Correo</label>
+					</div>
+					<div class="input-field col s12">
+						<i class="material-icons prefix">lock</i>
+						<input id="passwordlog" type="password" class="validate">
+						<label for="passwordlog">Contraseña</label>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat red-text">Cancelar</a>
+		<a href="#!" class="modal-action modal-close waves-effect waves-green btn purple">Continuar</a>
+	</div>
+
+</div>
+</div>
+
+<script type="text/javascript" src="assets/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="assets/materialize/js/materialize.min.js"></script>
+<script type="text/javascript" src="assets/js/plugins.js"></script>
+
+
+
+<div  class="card">
+	<div class="container">
+	<div class="card-content">
+		<p><h4>Esta es una página creada por los alumnos de UPIICSA del Instituto Politecnico Nacional<h4></p>
+		</div>
+
+		<div class="card-tabs">
+			<ul class="tabs tabs-fixed-width">
+				<li class="tab"><a  href="#test4">¿Que esel IPN?</a></li>
+				<li class="tab"><a class="active" href="#test5">¿Quienes crearon polwish?</a></li>
+				<li class="tab"><a href="#test6">¿Que es la UPIICSA?</a></li>
+			</ul>
+		</div>
+		<div  class="card-content grey lighten-4">
+
+			<div id="test4"><p>El Instituto Politécnico Nacional (IPN), popularmente conocido como el Politécnico o el Poli, es una institución pública mexicana de investigación y educación en niveles medio superior, superior y posgrado; fundada en la Ciudad de México en 1936 durante el gobierno del presidente Lázaro Cárdenas del Río. Esta casa de estudios fue fundada siguiendo los ideales revolucionarios de reconstrucción, desarrollo industrial y económico; buscando así brindar educación profesional sobre todo a las clases menos favorecidas.</p>
+				<p> _</p>
+				<p>En la actualidad se ha posicionado junto con la Universidad Nacional Autónoma de México como una de las mejores universidades del país.</p>
+				<p>_</p>
+				<p>El Instituto Politécnico Nacional es considerado una de las instituciones educativas más importantes de México y América Latina por su nivel académico, y su matrícula inscrita de 178,4922​ alumnos en sus 293 programas educativos impartidos en sus 82 unidades académicas. </p>
+				<p>_ </p>
+				<p>El promedio requerido es de 7.0 a 10. Tambien es una de las principales instituciones mexicanas en la formación de técnicos y profesionales en los campos de la administración, la ciencia, la ingeniería y las nuevas tecnologías.</p>
+			</div>
+			<div id="test5"><P>HINOJOSA MALDONADO FERNANDO</P>
+				<P>RUÍZ HERNÁNDEZ PAMELA GUADALUPE</P>
+				<p>ALEJANDRO DANIEL VILLAROEL CALDERON
+				</p></div>
+				<div id="test6"><p>La Unidad Profesional Interdisciplinaria de Ingeniería y Ciencias Sociales y Administrativas (UPIICSA) es una unidad perteneciente al Instituto Politécnico Nacional, se creó por decreto presidencial el 31 de agosto de 1971, siendo Presidente de los Estados Unidos Mexicanos el Lic. Luis Echeverría Álvarez, Secretario de Educación Pública el Ing. Víctor Bravo Ahuja y Director General del Instituto Politécnico Nacional, el Ing. Manuel Zorrilla Carcaño.
+				UPIICSA inició operaciones el 6 de noviembre de 1972, siendo un logro para el IPN y para el país el ofertar la primera carrera universitaria enfocada al estudio de la informática en toda Latinoamérica.</p>
+				<p>_</p>
+
+				<p>Es una institución educativa de nivel superior y posgrado comprometida en la formación integral e interdisciplinaria de profesionales e investigadores emprendedores y de alto nivel académico en las áreas de ingeniería, administración e informática, contribuyendo al desarrollo económico, social y sustentable a nivel nacional e internacional, contando con una estructura académica y de personal de apoyo calificada, infraestructura de vanguardia, así como con tecnologías vigentes.</p></div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<div class="row">
+		<div class="col s9 push-s3">
+		<div class="parallax-container">
+			<div class="parallax"><img src="assets/images/sol.png"></div>
+		</div>
+	</div>
+
+	<div class="col s3 pull-s9">
+
+		
+          <div class="card">
+            <div class="card-image">
+              <img src="assets/images/mora2.jpg">
+              <span class="card-title">Powlish fué creada por:</span>
+            </div>
+            <div class="card-content">
+              <p>Hinojosa Maldonado Fernando</p>
+              <p>Ruíz Hernández Pamela Guadalupe</p>
+              <p>Villaroel Calderon Alejandro Daniel</p>
+            </div>
+            <div class="card-action">
+              <a href="#"></a>
+            </div>
+         
+
+      </div>
+	</div>
+
+
+	<
+</div>
+
+
+
+
+
+<footer class="page-footer">
+	<div class="container">
+		<div class="row">
+			<div class="col l6 s12">
+				<h5 class="white-text">Contactanos</h5>
+				<p class="grey-text text-lighten-4">Siguenos en nuestras redes sociales"</p>
+			</div>
+			<div class="col l4 offset-l2 s12">
+				<ul>
+					<li><a class="grey-text text-lighten-3" href="https://www.facebook.com/"target="_blank"">Facebook</a></li>
+					<li><a class="grey-text text-lighten-3" href="https://twiter.com/"target="_blank"">Twitter</a></li>
+					<li><a class="grey-text text-lighten-3" href="https://www.instagram.com/"target="_blank"">Instagram</a></li>
+					<li><a class="grey-text text-lighten-3" href="http://www.spotify.com/"target="_blank"">Spotify</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="footer-copyright">
+		<div class="container">
+			© 2017 UPIICSA Instituto Politecnico Nacional
+
+		</div>
+	</div>
+</footer>
+
+
+
+</div>
+</body>
+</html>
