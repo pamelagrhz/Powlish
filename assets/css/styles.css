@@ -7,20 +7,32 @@
 	background-repeat:  no-repeat;
 	background-size: cover;
 }
-.parallax-container {
-      height: "your height here";
-    }
+.parallax-container.min {
+      height: 350px !important;
+}
        
 .intro_container{
 	height: 100%;
 	text-align: center;
-	position: center; 
 	background-color: rgba(0,0,0,0.2);
 	overflow: hidden;
 }
 
+.intro_container i.material-icons.large{
+	font-size: 18rem;
+}
+
+.intro_container i.material-icons.medium{
+	font-size: 15rem;
+}
+
 .nav-profile {
 	margin: 0 !important;
+}
+
+.nav-profile a {
+	padding-right: 16px !important;
+	padding-left: 16px !important;
 }
 
 .nav-profile i.material-icons {
@@ -30,5 +42,11 @@
 	line-height: 40px;
 	text-align: center;
 	margin-right: 8px;
+	vertical-align: middle;
 }
 
+@media only screen and (min-width: 993px) {
+	a.brand-logo {
+		padding-left: 24px !important;
+	}
+}
