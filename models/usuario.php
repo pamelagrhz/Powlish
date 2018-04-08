@@ -14,8 +14,7 @@
  	private $email;
  	private $pais;
 
- 	function __construct($id, $nombre, $apellido_paterno, $apellido_materno, $sexo, $telefono, $fecha_nacimiento, $email, $pais)
- 	{
+ 	function __construct($id, $nombre, $apellido_paterno, $apellido_materno, $sexo, $telefono, $fecha_nacimiento, $email, $pais) {
  		$this->id = $id;
  		$this->nombre = $nombre;
  		$this->apellido_paterno = $apellido_paterno;

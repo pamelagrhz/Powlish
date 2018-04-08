@@ -1,22 +1,15 @@
 <?php 
-	require_once('controllers/dbconnection.php');
 	require_once('models/pais.php');
+	require_once('models/usuario.php');
+	require_once('controllers/paises.php');
+	require_once('controllers/cookies.php');
 
-	$conn = db_connect();
-	$paises = array();
-
-	$sql = "SELECT id, nombre FROM paises";
-	$result = $conn->query($sql);
-
-	if ( $result->num_rows > 0 ) {
-	    // output data of each row
-	    //row devuelve filas, llamamos de sql a id y nombre
-		while( $row = $result->fetch_assoc() ) {
-			$pais = new Pais($row["id"], $row["nombre"]);
-			array_push($paises, $pais);
-		}
+	$paises = npais();
+	$cookie = new UserCookie();
+	$usuario = null;
+	if ( $cookie->isLogged() ) {
+		$usuario = $cookie->getUser(); // Se convierte en un tipo de dato de clase usuario
 	}
-	$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -33,22 +26,17 @@
 	<!--menu en pantalla grande -->
 	<nav>
 		<div class="nav-wrapper indigo lighten-2">
-			<a href="#!" class="brand-logo"><i class="material-icons">weekend</i>Polwish</a>
+			<a href="#!" class="brand-logo"><i class="material-icons">weekend</i>Powlish</a>
 			<a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
 			<ul class="right hide-on-med-and-down">
-
-				<li>			
-					<a href="#slide-out" data-activates="slide-out" class="button-collapse">Mi perfil</i></a>
-				</li>
 				<li><a href="">Inicio</a></li>
 				<li><a class="modal-trigger" href="#modal4">Membresías</a></li>
 				<li><a class="modal-trigger" href="#modal3">Más de Polwish</a></li>
-				<li class="nav-profile">
-					<a href="#">
-						<i href="#slide-out" data-activates="slide-out" class="button-collapse"><i class="material-icons circle grey ">person</i>Mi Perfil</i>
-					</a>
-				</li>
-				<li><a class="dropdown-button" href="#!" data-activates="login-dropdown">Iniciar<i class="material-icons right">arrow_drop_down</i></a></li>
+				<?php if ( !$cookie->isLogged() ) { ?>
+					<li><a class="dropdown-button" href="#!" data-activates="login-dropdown">Iniciar<i class="material-icons right">arrow_drop_down</i></a></li>
+				<?php } else { ?>
+					<li><a href="" data-activates="slide-out" class="button-collapse" style="display: list-item;float: left;"><i class="material-icons left">person</i><?php echo $usuario->getNombre(); ?></a></li>
+				<?php } ?>
 			</ul>
 		</div>
 	</nav>
@@ -60,14 +48,16 @@
 
 	<!--mi perfil-->
 	<ul id="slide-out" class="side-nav">
-		<li><div class="user-view">
-			<div class="background">
-				<img src="images/office.jpg">
-			</div>
-			<a href="#!user"><img class="circle" src="assets/images/user.jpg"></a>
-			<a href="#!name"><span class="black-text name">Nombre</span></a>
-			<a href="#!email"><span class="black-text email">correo@gmail.com</span></a>
-		</div></li>
+		<?php if ( $cookie->isLogged() ) { ?>
+			<li><div class="user-view">
+				<div class="background">
+					<img src="images/office.jpg">
+				</div>
+				<a href="#!user"><img class="circle" src="assets/images/user.jpg"></a>
+				<a href="#!name"><span class="black-text name"><?php echo $usuario->getNombre() . " " . $usuario->getApellidoPaterno() . " " . $usuario->getApellidoMaterno(); ?> </span></a>
+				<a href="#!email"><span class="black-text email"><?php echo $usuario->getEmail(); ?></span></a> 
+			</div></li>
+		<?php } ?>
 		<li><div class="divider"></div></li>
 		<li><a href="index2.html">Inicio</a></li>
 		<li><a class="modal-trigger" href="#modal3">Más de Polwish</a></li>
@@ -75,47 +65,51 @@
 
 		<li><a class="modal-trigger" href="#modal4" "><i class="material-icons">cloud</i>Mi Membresía</a></li>
 		<li><div class="divider"></div></li>
-		<li><a href="http://www.youtube.com/"target="_blank"">youtube</a></li>
-		<li><a href="http://www.spotify.com/"target="_blank"">spotify</a></li>
-		<li><a class="modal-trigger" href="#modal-signup">Registrate</a></li>
-		<li><a  class="modal-trigger" href="#modal-login">Iniciar Sesión</a></li>
+		<li><a href="http://www.youtube.com/" target="_blank">youtube</a></li>
+		<li><a href="http://www.spotify.com/" target="_blank">spotify</a></li>
 
-		<li><div class="divider"></div></li>
-		<li><a class="waves-effect" onclick="Materialize.toast('Esta pagina está en construcción, por favor intentalo más tarde', 4000)">Editar Mi Perfil</a></li>
+		<?php if ( !$cookie->isLogged() ) { ?>
+			<li><a class="modal-trigger" href="#modal-signup">Registrate</a></li>
+			<li><a  class="modal-trigger" href="#modal-login">Iniciar Sesión</a></li>
+		<?php } else { ?>
+			<li><div class="divider"></div></li>
+			<li><a class="waves-effect" onclick="Materialize.toast('Esta pagina está en construcción, por favor intentalo más tarde', 4000)">Editar Mi Perfil</a></li>
+			<li><a class="waves-effect waves-red red-text" onclick="window.location.href = 'controllers/logout.php'">Cerrar Sesión</a></li>
+		<?php } ?>
 	</ul>
 
 	<!-- Modal Structure -->
-	<div id="modal-signup" class="modal modal-fixed-footer modal-min">
+	<form id="modal-signup" class="modal modal-fixed-footer modal-min" action="controllers/registro.php" method="POST">
 		<div class="modal-content">
 			<h4 class="purple-text text-darken-4">Registro</h4>
 			<div class="row">
-				<form class="col s12" action="controllers/registro.php" method="POST">
+				<div class="col s12">
 					<div class="row">
 						<div class="input-field col s12">
-							<input name="nombre" id="first_name" type="text" class="validate">
+							<input name="nombre" required id="first_name" type="text" class="validate">
 							<label for="first_name">Nombre</label>
 						</div>
 						<div class="input-field col s12 m6">
-							<input name="apellido_paterno" id="last_name" type="text" class="validate">
+							<input name="apellido_paterno" required id="last_name" type="text" class="validate">
 							<label for="last_name">Apellido Paterno</label>
 						</div>
 						<div class="input-field col s12 m6">
-							<input name="apellido_materno" id="last_name2" type="text" class="validate">
+							<input name="apellido_materno" required id="last_name2" type="text" class="validate">
 							<label for="last_name2">Apellido Materno</label>
 						</div>
 						<div class="col s12"><h5 class="grey-text text-darken-2">Sexo</h5></div>
 						<div class="col s6">
-							<input name="sexo" type="radio" id="sexo1" value="1" />
+							<input name="sexo" type="radio" required id="sexo1" value="1" />
 							<label for="sexo1">Mujer</label>
 						</div>
 						<div class="col s6">
-							<input name="sexo" type="radio" id="sexo2" value="2" />
+							<input name="sexo" type="radio" required id="sexo2" value="2" />
 							<label for="sexo2">Hombre</label>
 						</div>
 						<div class="row"></div>
 
 						<div class="input-field col s12">
-							<input name="fecha_nacimiento" id="nacimiento" type="text" class="datepicker">
+							<input name="fecha_nacimiento" required id="nacimiento" type="text"> <!-- class="datepicker" -->
 							<label for="nacimiento">Fecha de nacimiento</label>
 						</div>
 						<div class="input-field col s12">
@@ -130,26 +124,52 @@
 							<label>País</label>
 						</div>
 						<div class="input-field col s12">
-							<input name="telefono" id="telefono" type="text" class="validate">
+							<input name="telefono" required id="telefono" type="text" class="validate">
 							<label for="telefono">Telefono</label>
 						</div>
 						<div class="input-field col s12">
-							<input name="email" id="email" type="email" class="validate">
+							<input name="email" required id="email" type="email" class="validate">
 							<label for="email">Email</label>
 						</div>
 						<div class="input-field col s12">
-							<input name="contrasenia" id="password" type="password" class="validate">
+							<input name="contrasenia" required id="password" type="password" class="validate">
 							<label for="password">Password</label>
 						</div>
 					</div>
-				</form>
+				</div>
 			</div>
 		</div>
 		<div class="modal-footer">
 			<a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat red-text">Cancelar</a>
-			<a href="#!" class="modal-action modal-close waves-effect waves-green btn purple">Continuar</a>
+			<button type="submit" class="modal-action modal-close waves-effect waves-green btn purple">Continuar</button>
 		</div>
-	</div>
+	</form>
+
+	<form id="modal-login" class="modal modal-min" action="controllers/login.php" method="POST">
+		<div class="modal-content">
+			<h4 class="purple-text text-darken-4">Iniciar sesión</h4>
+			<div class="row">
+				<div class="col s12">
+					<div class="row">
+						<div class="input-field col s12">
+							<i class="material-icons prefix">email</i>
+							<input name="email" id="icon_prefix" type="text" class="validate">
+							<label for="icon_prefix">Correo</label>
+						</div>
+						<div class="input-field col s12">
+							<i class="material-icons prefix">lock</i>
+							<input name="password" id="passwordlog" type="password" class="validate">
+							<label for="passwordlog">Contraseña</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat red-text">Cancelar</a>
+			<button type="submit" class="modal-action modal-close waves-effect waves-green btn purple">Continuar</button>
+		</div>
+	</form>
 	
 	<!-- Modal3 Structure -->
 	<div id="modal3" class="modal modal-fixed-footer">
@@ -230,17 +250,39 @@
 
 	<!--Musica-->
 	<div>
+		<?php if( $cookie->isLogged() ) { ?>
+			<div class="carousel carousel-slider center" data-indicators="true">
+				<div class="carousel-fixed-item center">
+				</div>
+				<div class="carousel-item white-text bg-img" href="https://www.spotify.com/" style="background-image: url('assets/images/musica.jpg');">
+					<h1 class=" white-text  valign-wrapper">Música</h1>
+					<p class="white-text  valign-wrapper">Descubre musica nueva y poco conocida.</p>
+				</div>
+			</div>
+		<?php } else { ?>
 		<div class="carousel carousel-slider center" data-indicators="true">
 			<div class="carousel-fixed-item center">
+				<a class="waves-effect waves-light btn modal-trigger" href="#modal3">Más dePolwish</a>
 			</div>
 			<div class="carousel-item white-text bg-img" href="https://www.spotify.com/" style="background-image: url('assets/images/musica.jpg');">
 				<h1 class=" white-text  valign-wrapper">Música</h1>
 				<p class="white-text  valign-wrapper">Descubre musica nueva y poco conocida.</p>
 			</div>
+			<div class="carousel-item white-text bg-img" style="background-image: url('assets/images/videoo.jpg');">
+				<h1 class="black-text  valign-wrapper">Videos</h1>
+				<p class="black-text  valign-wrapper">Aqui podras ver todos los videos de musica que estan de moda. </p>
+
+			</div>
+			<div class="carousel-item  white-text bg-img" style="background-image: url('assets/images/peli.jpg');">
+				<h1 class="white-text  valign-wrapper">Series y Peliculas</h1>
+				<p class="white-text valign-wrapper ">Descubre nuevas series y peliculas que sean de tu agrado!!!</p>
+			</div>
 		</div>
+		<?php } ?>
 	</div>
 	<br>
 	<!--VIDEO YOUNG T-->
+	<?php if ( $cookie->isLogged() ) { ?>
 	<div class="row">
 		<div class="col s12 l8">
 			<div class=" video-container" >
@@ -421,6 +463,71 @@
 			<div class="parallax"><img src="assets/images/sol.png"></div>
 		</div>
 	</div>
+	<?php } else { ?>
+	<div class="card">
+		<div class="container">
+			<div class="card-content">
+				<p>
+					<h4>Esta es una página creada por los alumnos de UPIICSA del Instituto Politecnico Nacional<h4>
+				</p>
+			</div>
+			<div class="card-tabs">
+				<ul class="tabs tabs-fixed-width">
+					<li class="tab"><a  href="#test4">¿Que esel IPN?</a></li>
+					<li class="tab"><a class="active" href="#test5">¿Quienes crearon polwish?</a></li>
+					<li class="tab"><a href="#test6">¿Que es la UPIICSA?</a></li>
+				</ul>
+			</div>
+			<div class="card-content grey lighten-4">
+				<div id="test4">
+					<p>El Instituto Politécnico Nacional (IPN), popularmente conocido como el Politécnico o el Poli, es una institución pública mexicana de investigación y educación en niveles medio superior, superior y posgrado; fundada en la Ciudad de México en 1936 durante el gobierno del presidente Lázaro Cárdenas del Río. Esta casa de estudios fue fundada siguiendo los ideales revolucionarios de reconstrucción, desarrollo industrial y económico; buscando así brindar educación profesional sobre todo a las clases menos favorecidas.</p>
+					<p> _</p>
+					<p>En la actualidad se ha posicionado junto con la Universidad Nacional Autónoma de México como una de las mejores universidades del país.</p>
+					<p>_</p>
+					<p>El Instituto Politécnico Nacional es considerado una de las instituciones educativas más importantes de México y América Latina por su nivel académico, y su matrícula inscrita de 178,4922​ alumnos en sus 293 programas educativos impartidos en sus 82 unidades académicas. </p>
+					<p>_ </p>
+					<p>El promedio requerido es de 7.0 a 10. Tambien es una de las principales instituciones mexicanas en la formación de técnicos y profesionales en los campos de la administración, la ciencia, la ingeniería y las nuevas tecnologías.</p>
+				</div>
+				<div id="test5">
+					<p>HINOJOSA MALDONADO FERNANDO</p>
+					<p>RUÍZ HERNÁNDEZ PAMELA GUADALUPE</p>
+					<p>ALEJANDRO DANIEL VILLAROEL CALDERON</p>
+				</div>
+				<div id="test6">
+					<p>La Unidad Profesional Interdisciplinaria de Ingeniería y Ciencias Sociales y Administrativas (UPIICSA) es una unidad perteneciente al Instituto Politécnico Nacional, se creó por decreto presidencial el 31 de agosto de 1971, siendo Presidente de los Estados Unidos Mexicanos el Lic. Luis Echeverría Álvarez, Secretario de Educación Pública el Ing. Víctor Bravo Ahuja y Director General del Instituto Politécnico Nacional, el Ing. Manuel Zorrilla Carcaño.
+					<br>
+					UPIICSA inició operaciones el 6 de noviembre de 1972, siendo un logro para el IPN y para el país el ofertar la primera carrera universitaria enfocada al estudio de la informática en toda Latinoamérica.</p>
+					<p>_</p>
+
+					<p>Es una institución educativa de nivel superior y posgrado comprometida en la formación integral e interdisciplinaria de profesionales e investigadores emprendedores y de alto nivel académico en las áreas de ingeniería, administración e informática, contribuyendo al desarrollo económico, social y sustentable a nivel nacional e internacional, contando con una estructura académica y de personal de apoyo calificada, infraestructura de vanguardia, así como con tecnologías vigentes.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col s12 l3">
+			<div class="card">
+				<div class="card-image">
+					<img src="assets/images/mora2.jpg">
+					<span class="card-title">Powlish fué creada por:</span>
+				</div>
+				<div class="card-content">
+					<p>Hinojosa Maldonado Fernando</p>
+					<p>Ruíz Hernández Pamela Guadalupe</p>
+					<p>Villaroel Calderon Alejandro Daniel</p>
+				</div>
+				<div class="card-action">
+					<a href="#"></a>
+				</div>
+	     	</div>
+		</div>
+		<div class="col s12 l9">
+			<div class="parallax-container">
+				<div class="parallax"><img src="assets/images/sol.png"></div>
+			</div>
+		</div>
+	</div>
+	<?php } ?>
 
 	<footer class="page-footer blue lighten-2">
 		<div class="container">
